@@ -19,7 +19,6 @@ document
       messageElement.textContent = "Login successful!";
       messageElement.style.color = "green";
 
-      // Hide login form and show dashboard after a short delay
       setTimeout(() => {
         document.getElementById("loginContainer").style.display = "none";
         document.getElementById("dashboardContainer").style.display = "block";
@@ -33,18 +32,15 @@ document
     }
   });
 
-// Function to fetch users from GitHub API
 async function fetchGitHubUsers() {
   const response = await fetch("https://api.github.com/users");
   const data = await response.json();
-  return data.slice(0, 10); // Fetch top 10 users
+  return data.slice(0, 10);
 }
 
-// Function to display users in the list
 function displayUsers(users) {
   const userList = document.getElementById("userList");
-  userList.innerHTML = ""; // Clear current list
-
+  userList.innerHTML = "";
   users.forEach((user) => {
     const listItem = document.createElement("li");
     listItem.textContent = user.login;
@@ -54,16 +50,14 @@ function displayUsers(users) {
   });
 }
 
-// Event listener for the fetch button
 document
   .getElementById("fetchButton")
   .addEventListener("click", async function () {
     const users = await fetchGitHubUsers();
     displayUsers(users);
-    window.currentUsers = users; // Save fetched users globally for sorting
+    window.currentUsers = users;
   });
 
-// Sorting function
 document
   .getElementById("sortOptions")
   .addEventListener("change", function (event) {
@@ -77,11 +71,9 @@ document
     displayUsers(sortedUsers);
   });
 
-// Logout function
 document.getElementById("logoutButton").addEventListener("click", function () {
-  // Hide dashboard and show login form
   document.getElementById("dashboardContainer").style.display = "none";
   document.getElementById("loginContainer").style.display = "block";
-  document.getElementById("loginMessage").textContent = ""; // Clear any message
-  document.getElementById("loginForm").reset(); // Reset login form
+  document.getElementById("loginMessage").textContent = "";
+  document.getElementById("loginForm").reset();
 });
